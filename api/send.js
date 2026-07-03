@@ -1,9 +1,9 @@
 import nodemailer from 'nodemailer';
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
+  if (req.method !== 'POST') return res.status(405).json({error:'POST only'});
   
-  const { to, name } = req.body;
+  const { to, name, subject, html } = req.body;
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
@@ -18,8 +18,8 @@ export default async function handler(req, res) {
   await transporter.sendMail({
     from: `"ZenPay" <${process.env.ZOHO_USER}>`,
     to,
-    subject: 'Bienvenue sur ZenPay',
-    html: `<p>Bonjour ${name},</p><p>Merci pour ton inscription sur ZenPay !</p>`
+    subject: subject || 'Notification ZenPay',
+    html: html || `<p>Bonjour ${name || ''},</p><p>Merci pour votre inscription.</p>`
   });
 
   res.status(200).json({ ok: true });
