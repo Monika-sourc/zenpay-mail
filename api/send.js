@@ -14,12 +14,12 @@ export default async function handler(req, res) {
     if (!to) return res.status(400).json({error:'email manquant'});
 
     const transporter = nodemailer.createTransport({
-      host: 'smtp.zoho.com', // garde smtp.zoho.eu si ton compte est en EU
+      host: 'smtp.zoho.com',
       port: 465,
       secure: true,
       auth: {
-        user: process.env.ZOHO_USER, // noreply@zenpaybj.xyz
-        pass: process.env.ZOHO_PASS  // g!ksQii3
+        user: process.env.ZOHO_USER,
+        pass: process.env.ZOHO_PASS
       }
     });
 
